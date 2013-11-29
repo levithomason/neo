@@ -1,0 +1,5 @@
+Django==1.6
+lucene-querybuilder==0.2
+neomodel==0.3.6
+py2neo==1.5
+pytz==2013b
