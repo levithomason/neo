@@ -1,4 +1,9 @@
 neo
 ===
 
-neo4j sandbox
+# Setup
+
+```
+pip install -r requirements.txt
+```
+
