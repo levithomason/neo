@@ -13,6 +13,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Use the right neo4j rest url
+IN_PRODUCTION = os.environ['IN_PRODUCTION']
+
 if IN_PRODUCTION:
     NEO4J_REST_URL = os.environ['NEO4J_URL']
 else:
