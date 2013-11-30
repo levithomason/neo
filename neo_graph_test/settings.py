@@ -12,11 +12,11 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# heroku env variable
+# Use the right neo4j rest url
 if IN_PRODUCTION:
     NEO4J_REST_URL = os.environ['NEO4J_URL']
 else:
-    NEO4J_REST_URL = os.environ['NEO4J_URL']
+    NEO4J_REST_URL = "http://localhost:7474/db/data/"
 
 
 # Quick-start development settings - unsuitable for production
