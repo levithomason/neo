@@ -16,7 +16,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IN_PRODUCTION = os.environ['IN_PRODUCTION']
 
 if IN_PRODUCTION:
-    NEO4J_REST_URL = os.environ['NEO4J_URL']
+    try:
+        NEO4J_REST_URL = os.environ['NEO4J_URL']
+    except KeyError:
+        pass
 else:
     NEO4J_REST_URL = "http://localhost:7474/db/data/"
 
@@ -58,7 +61,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'neo_graph_test.urls'
 
-WSGI_APPLICATION = 'neo_graph_test.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
@@ -67,7 +70,9 @@ WSGI_APPLICATION = 'neo_graph_test.wsgi.application'
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
-DATABASES['default'] = dj_database_url.config()
+DATABASES = {
+    'default': dj_database_url.config()
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
