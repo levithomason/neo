@@ -26,9 +26,9 @@ else:
 SECRET_KEY = 'j!oi%18s&2zf6+(femb6zf6*uqgg=f08u3l*=^8l#gj0h6%e7)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = IN_PRODUCTION
+DEBUG = not IN_PRODUCTION
 
-TEMPLATE_DEBUG = IN_PRODUCTION
+TEMPLATE_DEBUG = not IN_PRODUCTION
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
