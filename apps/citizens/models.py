@@ -1,7 +1,4 @@
-from django.db import models
-
-from neomodel import (StructuredNode, StringProperty, IntegerProperty,
-                      RelationshipTo, RelationshipFrom)
+from neomodel import (StructuredNode, StringProperty, IntegerProperty, RelationshipTo, RelationshipFrom)
 
 
 class Country(StructuredNode):
