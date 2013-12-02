@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<h2>Relationships</h2>
+    {% for name, age, countries in people_arr %}
+        <div>{{ name }} is {{ age }} from{% for c in countries %}, {{ c.code }}{% endfor %}</div>
+    {% endfor %}
+    <h2>People</h2>
+    <ul>
+        {% for p in people %}
+            <li>{{ p.name }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Countries</h2>
+    <ul>
+        {% for c in countries %}
+        <li>{{ c.code }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

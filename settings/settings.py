@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # Use the right neo4j rest url
 IN_PRODUCTION = os.environ['IN_PRODUCTION']
@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.citizens',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,7 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'neo_graph_test.urls'
+ROOT_URLCONF = 'apps.neo_graph_test.urls'
 
 WSGI_APPLICATION = 'wsgi.application'
 
