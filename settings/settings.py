@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Use the right neo4j rest url
-IN_PRODUCTION = os.environ['IN_PRODUCTION']
+IN_PRODUCTION = os.environ['IN_PRODUCTION'] == 'True'
 
 if IN_PRODUCTION:
     try:
@@ -32,7 +32,6 @@ SECRET_KEY = 'j!oi%18s&2zf6+(femb6zf6*uqgg=f08u3l*=^8l#gj0h6%e7)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IN_PRODUCTION
-
 TEMPLATE_DEBUG = not IN_PRODUCTION
 
 # Allow all host headers
