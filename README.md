@@ -9,3 +9,5 @@ neo
 3. Set/unset the production environment variable flag (windows virutualenv):
     - activate.bat ```SET IN_PRODUCTION=False```
     - deactivate.bat ```SET IN_PRODUCTION=```
+4. Generate some citizen data ```python ./manage.py generate_citizen_data```
+    - cleanup with ```delete_citizen_data```
