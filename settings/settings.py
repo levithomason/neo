@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Use the right neo4j rest url
 IN_PRODUCTION = os.environ['IN_PRODUCTION']
@@ -31,9 +31,9 @@ else:
 SECRET_KEY = 'j!oi%18s&2zf6+(femb6zf6*uqgg=f08u3l*=^8l#gj0h6%e7)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = IN_PRODUCTION
+DEBUG = not IN_PRODUCTION
 
-TEMPLATE_DEBUG = IN_PRODUCTION
+TEMPLATE_DEBUG = not IN_PRODUCTION
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -48,6 +48,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'apps.neo_graph_test',
     'apps.citizens',
 )
 

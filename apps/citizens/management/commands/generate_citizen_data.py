@@ -1,11 +1,13 @@
 import random
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import NoArgsCommand
 from apps.citizens.models import Person, Country
 
 
-class Command(BaseCommand):
+class Command(NoArgsCommand):
 
-    def generate_citizens():
+    help = 'Generates Person and Country nodes and relates them'
+
+    def handle_noargs(self, **options):
         # create some countries and save the nodes to countries[]
         country_codes = ['USA', 'DE', 'EU', 'CN', 'MX']
 
