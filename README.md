@@ -11,3 +11,4 @@ Levi's neo4j Sandbox
     - deactivate.bat ```SET IN_PRODUCTION=```
 4. Generate some citizen data ```python ./manage.py generate_citizen_data```
     - cleanup with ```delete_citizen_data```
+5. Run server and visit http://127.0.0.1:8000/citizens/
