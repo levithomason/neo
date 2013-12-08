@@ -1,0 +1,33 @@
+#app {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+
+    .json {
+        display: none;
+    }
+
+    #stage {
+        position: relative;
+        height: 100%;
+        background: #DDD;
+
+        .node {
+            stroke-width: 3px;
+
+            &.country {
+                @country_color: #877399;
+                fill: lighten(@country_color, 10);
+                stroke: darken(@country_color, 10);
+            }
+            &.person {
+                @person_color: #769799;
+                fill: lighten(@person_color, 10);
+                stroke: darken(@person_color, 10);
+            }
+        }
+    }
+}

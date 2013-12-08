@@ -1,4 +1,27 @@
-#stage {
-    height: 500px;
-    background: #C0C0C0;
+#app {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+#app .json {
+  display: none;
+}
+#app #stage {
+  position: relative;
+  height: 100%;
+  background: #DDD;
+}
+#app #stage .node {
+  stroke-width: 3px;
+}
+#app #stage .node.country {
+  fill: #a091ae;
+  stroke: #6d5b7e;
+}
+#app #stage .node.person {
+  fill: #93adaf;
+  stroke: #5e7c7e;
 }
