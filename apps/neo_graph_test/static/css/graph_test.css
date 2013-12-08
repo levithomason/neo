@@ -31,5 +31,14 @@ html {
   stroke: #628484;
 }
 #app #stage .group .label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-weight: bold;
+  fill: rgba(255, 255, 255, 0.85);
   text-anchor: middle;
 }
+/**********************************************************************************************************
+ * Mixins
+ **********************************************************************************************************/
