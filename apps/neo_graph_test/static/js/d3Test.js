@@ -61,7 +61,9 @@ $(document).ready(function() {
     /*
     Create country / person elements
      */
+    var group;
     var circle;
+    var text;
     var r;
     var x;
     var y;
@@ -69,7 +71,9 @@ $(document).ready(function() {
     for (var country in countries) {
         r = styleCountry.radius;
 
-        circle = graph.append('circle');
+        group = graph.append('g');
+        circle = group.append('circle');
+        text = group.append('text');
 
         x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
         y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
@@ -101,23 +105,24 @@ $(document).ready(function() {
      */
     $('#stage')
         .mousedown(function(e) {
-            var offset = $(this).offset();
+            // left click
+            if (e.which === 1) {
+                var offset = $(this).offset();
 
-            var mouseX = e.clientX - offset.left;
-            var mouseY = e.clientY - offset.top;
+                var mouseX = e.clientX - offset.left;
+                var mouseY = e.clientY - offset.top;
 
-            var circle = graph.append("circle");
+                var circle = graph.append("circle");
 
-            circle
-                .attr('class', 'new_cirlce dragging')
-                .attr('r', 20)
-                .attr('cx', mouseX)
-                .attr('cy', mouseY)
-                .style('fill', 'transparent')
-                .style('stroke', '#749974')
-                .style('stroke-width', '4px');
-            
-            console.log(circle[0][0]);
+                circle
+                    .attr('class', 'new_cirlce dragging')
+                    .attr('r', 20)
+                    .attr('cx', mouseX)
+                    .attr('cy', mouseY)
+                    .style('fill', 'transparent')
+                    .style('stroke', '#749974')
+                    .style('stroke-width', '4px');
+            }
         })
         .mousemove(function(e) {
             var offset = $(this).offset();
