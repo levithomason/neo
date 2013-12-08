@@ -1,3 +1,6 @@
+html {
+  font-family: Arial;
+}
 #app {
   position: absolute;
   top: 0;
@@ -14,14 +17,19 @@
   height: 100%;
   background: #DDD;
 }
-#app #stage .node {
+#app #stage .group .node {
   stroke-width: 3px;
+  fill-opacity: 0.75;
+  stroke-opacity: 0.85;
 }
-#app #stage .node.country {
-  fill: #a091ae;
-  stroke: #6d5b7e;
+#app #stage .group .node.country {
+  fill: #a698b3;
+  stroke: #736284;
 }
-#app #stage .node.person {
-  fill: #93adaf;
-  stroke: #5e7c7e;
+#app #stage .group .node.person {
+  fill: #98b3b3;
+  stroke: #628484;
+}
+#app #stage .group .label {
+  text-anchor: middle;
 }

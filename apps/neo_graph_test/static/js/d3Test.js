@@ -50,13 +50,20 @@ $(document).ready(function() {
     var people = $.parseJSON(jsonPeople);
     var countries = $.parseJSON(jsonCountries);
 
-    var styleCountry = {
-        'radius': 30
+    // style dictionary
+
+    var style = {
+        'country': {
+            'radius': 50
+        },
+        'people': {
+            'radius': 30
+        },
+        'newCircle': {
+            'radius': 40
+        }
     };
 
-    var stylePerson = {
-        'radius': 15
-    };
 
     /*
     Create country / person elements
@@ -69,7 +76,7 @@ $(document).ready(function() {
     var y;
     
     for (var country in countries) {
-        r = styleCountry.radius;
+        r = style.country.radius;
 
         group = graph.append('g');
         circle = group.append('circle');
@@ -78,26 +85,46 @@ $(document).ready(function() {
         x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
         y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
 
+        group
+            .attr('class', 'group country');
+
         circle
             .attr('class', 'node country')
             .attr('r', r)
             .attr('cx', x + "%")
             .attr('cy', y + "%");
+
+        text
+            .attr('class', 'label country')
+            .attr('dx', x + "%")
+            .attr('dy', y + "%")
+            .text(country)
     }
     
-    for (var person in countries) {
-        r = stylePerson.radius;
+    for (var person in people) {
+        r = style.people.radius;
 
-        circle = graph.append('circle');
+        group = graph.append('g');
+        circle = group.append('circle');
+        text = group.append('text');
 
         x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
         y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
+
+        group
+            .attr('class', 'group person');
 
         circle
             .attr('class', 'node person')
             .attr('r', r)
             .attr('cx', x + "%")
             .attr('cy', y + "%");
+
+        text
+            .attr('class', 'label person')
+            .attr('dx', x + "%")
+            .attr('dy', y + "%")
+            .text(person);
     }
 
     /*
@@ -116,7 +143,7 @@ $(document).ready(function() {
 
                 circle
                     .attr('class', 'new_cirlce dragging')
-                    .attr('r', 20)
+                    .attr('r', style.newCircle.radius)
                     .attr('cx', mouseX)
                     .attr('cy', mouseY)
                     .style('fill', 'transparent')
