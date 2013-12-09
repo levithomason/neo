@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-                       url(r'^', 'apps.neo_graph_test.views.create_graph', name='create_graph'),
                        url(r'^', include('apps.citizens.urls')),
                        url(r'^admin/', include(admin.site.urls)),
+                       url(r'/^', 'apps.neo_graph_test.views.create_graph', name='create_graph'),
                        )
