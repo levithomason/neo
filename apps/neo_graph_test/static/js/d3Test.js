@@ -65,65 +65,72 @@ $(document).ready(function() {
     };
 
     /*
-    Create country / person elements
+    Create country / person elements if there is data, otherwise notify user to create some data
      */
-    var group;
-    var circle;
-    var text;
-    var r;
-    var x;
-    var y;
+    if ($.isEmptyObject(countries) && $.isEmptyObject(people)) {
+        $('#stage').append(
+            '<div id="no_data_message"> python ./manage.py mkdata == some action :-)</div>'
+        )
 
-    for (var country in countries) {
-        r = style.country.radius;
+    } else {
+        var group;
+        var circle;
+        var text;
+        var r;
+        var x;
+        var y;
 
-        group = graph.append('g');
-        circle = group.append('circle');
-        text = group.append('text');
+        for (var country in countries) {
+            r = style.country.radius;
 
-        x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
-        y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
+            group = graph.append('g');
+            circle = group.append('circle');
+            text = group.append('text');
 
-        group
-            .attr('class', 'group country');
+            x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
+            y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
 
-        circle
-            .attr('class', 'node country')
-            .attr('r', r)
-            .attr('cx', x + "%")
-            .attr('cy', y + "%");
+            group
+                .attr('class', 'group country');
 
-        text
-            .attr('class', 'label country')
-            .attr('dx', x + "%")
-            .attr('dy', y + "%")
-            .text(country)
-    }
-    
-    for (var person in people) {
-        r = style.people.radius;
+            circle
+                .attr('class', 'node country')
+                .attr('r', r)
+                .attr('cx', x + "%")
+                .attr('cy', y + "%");
 
-        group = graph.append('g');
-        circle = group.append('circle');
-        text = group.append('text');
+            text
+                .attr('class', 'label country')
+                .attr('dx', x + "%")
+                .attr('dy', y + "%")
+                .text(country);
+        }
 
-        x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
-        y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
+        for (var person in people) {
+            r = style.people.radius;
 
-        group
-            .attr('class', 'group person');
+            group = graph.append('g');
+            circle = group.append('circle');
+            text = group.append('text');
 
-        circle
-            .attr('class', 'node person')
-            .attr('r', r)
-            .attr('cx', x + "%")
-            .attr('cy', y + "%");
+            x = helpers.random.range(0, 1, r / svg.clientWidth) * 100;
+            y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
 
-        text
-            .attr('class', 'label person')
-            .attr('dx', x + "%")
-            .attr('dy', y + "%")
-            .text(person);
+            group
+                .attr('class', 'group person');
+
+            circle
+                .attr('class', 'node person')
+                .attr('r', r)
+                .attr('cx', x + "%")
+                .attr('cy', y + "%");
+
+            text
+                .attr('class', 'label person')
+                .attr('dx', x + "%")
+                .attr('dy', y + "%")
+                .text(person);
+        }
     }
 
     /*
@@ -196,7 +203,9 @@ $(document).ready(function() {
 });
 
 
-///////////////////////////////// old stuff for reference //////////////////////////////////////
+/*********************************************************************************************
+  old stuff for reference
+==============================================================================================
 
 var generate_random = function() {
     var g = d3.select('#stage').append('svg');
@@ -237,3 +246,4 @@ var generate_random = function() {
             return "#" + d + d + d;
         });
 };
+ *********************************************************************************************/

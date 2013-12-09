@@ -7,8 +7,8 @@ class Command(NoArgsCommand):
     help = 'Deletes all Person and Country nodes'
 
     def handle_noargs(self, **options):
-        confirm_word = 'DELETE'
-        user_input = raw_input("\nType '%s' to delete ALL nodes from the database: " % confirm_word)
+        confirm_word = 'y'
+        user_input = raw_input("\nDelete ALL nodes from the database (y/n)?: ")
 
         if user_input == confirm_word:
 
