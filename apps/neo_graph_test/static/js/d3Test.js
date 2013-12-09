@@ -64,7 +64,6 @@ $(document).ready(function() {
         }
     };
 
-
     /*
     Create country / person elements
      */
@@ -74,7 +73,7 @@ $(document).ready(function() {
     var r;
     var x;
     var y;
-    
+
     for (var country in countries) {
         r = style.country.radius;
 

@@ -3,6 +3,7 @@ from neomodel import (StructuredNode, StringProperty, IntegerProperty, Relations
 
 class Country(StructuredNode):
     code = StringProperty(unique_index=True, required=True)
+    name = StringProperty(index=True)
 
     # traverse incoming IS_FROM relation, inflate to Person objects
     inhabitant = RelationshipFrom('Person', 'IS_FROM')

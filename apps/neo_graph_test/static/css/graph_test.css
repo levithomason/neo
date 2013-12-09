@@ -20,15 +20,14 @@ html {
 #app #stage .group .node {
   stroke-width: 3px;
   fill-opacity: 0.75;
-  stroke-opacity: 0.85;
 }
 #app #stage .group .node.country {
-  fill: #a698b3;
-  stroke: #736284;
+  fill: #a68fbc;
+  stroke: #73568f;
 }
 #app #stage .group .node.person {
-  fill: #98b3b3;
-  stroke: #628484;
+  fill: #8fbcbc;
+  stroke: #568f8f;
 }
 #app #stage .group .label {
   -webkit-user-select: none;

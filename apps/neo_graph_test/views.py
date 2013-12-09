@@ -19,7 +19,7 @@ def create_graph(request):
 
     countries_dict = {}
     for c in countries:
-        country = {'code': c.code}
+        country = {'code': c.code, 'name': c.name}
 
         countries_dict[c.code] = country
 
