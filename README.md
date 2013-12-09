@@ -23,4 +23,4 @@ Levi's neo4j Sandbox
 
 **List of data**
 
-1. A Django template listing the current data at http://localhost:8000/citizens/
+1. A Django template listing the current data at http://127.0.0.1:8000/citizens/
