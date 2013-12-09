@@ -18,7 +18,7 @@ Levi's neo4j Sandbox
 **The graph**
 
 1. Check out the graph ```python ./manage.py runserver``` and visit http://127.0.0.1:8000
-2. Refresh the page to get a random layout (will be a [force directed graph](https://github.com/mbostock/d3/wiki/Force-Layout) soon!)
+2. Refresh the page to get a random layout (will be a [force directed graph](http://mbostock.github.io/d3/talk/20111116/force-collapsible.html) soon!)
 3. Click anywhere to place a random circle
 
 **List of data**
