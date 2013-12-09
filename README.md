@@ -10,6 +10,6 @@ Levi's neo4j Sandbox
     - deactivate.bat ```SET IN_PRODUCTION=```
 
 ## Quick Start
-1. Make some example data: ```python ./manage.py mkdata```
-2. Delete ALL data: ```python ./manage.py rmdata```
-3. Run server and visit http://127.0.0.1:8000/citizens/
+1. Make some example data ```python ./manage.py mkdata```
+2. Check out the graph ```python ./manage.py runserver``` and visit http://127.0.0.1:8000
+3. Remove ALL data ```python ./manage.py rmdata```
