@@ -12,6 +12,20 @@ document.body.onmouseup = function() {
 };
 
 
+// graph element styles
+var style = {
+    'country': {
+        'radius': 50
+    },
+    'people': {
+        'radius': 30
+    },
+    'newCircle': {
+        'radius': 40
+    }
+};
+
+
 /**********************************************************************************************************
  * Helpers
  **********************************************************************************************************/
@@ -30,43 +44,126 @@ helpers = {
 
 
 /**********************************************************************************************************
- * Ready
+ * RESTful API Cypher Queries
  **********************************************************************************************************/
 
-$(document).ready(function() {
-
-    /*
-    Setup d3
-     */
-    var graph = d3.select('#stage').append('svg');
-    var svg = graph[0][0];
-
-    /*
-     load all countries / citizens
-     */
-    var jsonPeople = $('.json.people').html();
-    var jsonCountries = $('.json.countries').html();
-    
-    var people = $.parseJSON(jsonPeople);
-    var countries = $.parseJSON(jsonCountries);
-
-    // style dictionary
-
-    var style = {
-        'country': {
-            'radius': 50
-        },
-        'people': {
-            'radius': 30
-        },
-        'newCircle': {
-            'radius': 40
+var cypher = {
+    'all_nodes': {
+        "query": "START n=node(*) RETURN n",
+        "params": {
         }
-    };
+    },
+    'countries': {
+        "query": "START category=node:Category(category='Country') MATCH category--country RETURN country",
+        "params": {
+        }
+    },
+    'people': {
+        "query": "START category=node:Category(category='Person') MATCH category--person RETURN person",
+        "params": {
+        }
+    },
+    'all_relationships': {
+        "query": "START r=relationship(*) RETURN r",
+        "params": {
+        }
+    },
+    'is_from': {
+        "query": "START country=node(*) MATCH person-[r:IS_FROM]->country RETURN r",
+        "params": {
+        }
+    }
+};
 
-    /*
-    Create country / person elements if there is data, otherwise notify user to create some data
-     */
+var getPeople = function() {
+    var people = {};
+
+    var jqxhr_people = $.post("http://localhost:7474/db/data/cypher", cypher.people, function() {
+        var json = $.parseJSON(jqxhr_people.responseText);
+        var person;
+        //console.log(json.data);
+
+        for (var i in json.data) {
+            person = json.data[i][0].data;
+            person['id'] = json.data[i][0].self;
+
+            people[person['name']] = person;
+        }
+        console.log('Got people:');
+        console.log(people);
+    });
+
+    return people;
+
+};
+
+var getCountries = function() {
+    var countries = {};
+
+    var jqxhr_countries = $.post("http://localhost:7474/db/data/cypher", cypher.countries, function() {
+        var json = $.parseJSON(jqxhr_countries.responseText);
+        var country;
+        //console.log(json.data);
+
+        for (var i in json.data) {
+            country = json.data[i][0].data;
+            country['id'] = json.data[i][0].self;
+
+            countries[country['name']] = country;
+        }
+        console.log('Got countries:');
+        console.log(countries);
+
+    });
+
+    return countries;
+};
+
+var getRelationships = function() {
+    var relationships = {};
+
+    var jqxhr_relationships = $.post("http://localhost:7474/db/data/cypher", cypher.is_from, function() {
+        var json = $.parseJSON(jqxhr_relationships.responseText);
+        var relationship;
+
+        //console.log(json.data);
+
+        for (var i in json.data) {
+            var r = json.data[i][0];
+
+            relationship = {
+                'id': r.self,
+                'type': r.type,
+                'start': r.start,
+                'end': r.end
+            };
+
+            relationships['rel' + i] = relationship;
+        }
+        console.log('Got relationships:');
+        console.log(relationships);
+    });
+
+    return relationships;
+};
+
+
+/**********************************************************************************************************
+ * D3 Graph
+ **********************************************************************************************************/
+var d3Init = function() {
+    return d3.select('#stage').append('svg');
+};
+
+var d3Draw = function() {
+    console.log('getting data for draw');
+    var people = getPeople();
+    console.log(people);
+    var countries = getCountries();
+    console.log(countries);
+    var relationships = getRelationships();
+    console.log(relationships);
+
     if ($.isEmptyObject(countries) && $.isEmptyObject(people)) {
         $('#stage').append(
             '<div id="no_data_message"> python ./manage.py mkdata == some action :-)</div>'
@@ -103,7 +200,7 @@ $(document).ready(function() {
                 .attr('class', 'label country')
                 .attr('dx', x + "%")
                 .attr('dy', y + "%")
-                .text(country);
+                .text(countries[country].name);
         }
 
         for (var person in people) {
@@ -129,9 +226,27 @@ $(document).ready(function() {
                 .attr('class', 'label person')
                 .attr('dx', x + "%")
                 .attr('dy', y + "%")
-                .text(person);
+                .text(people[person].name);
         }
     }
+};
+
+
+/**********************************************************************************************************
+ * Ready
+ **********************************************************************************************************/
+
+$(document).ready(function() {
+
+    /***********************************************************************
+     * Init D3
+     ***********************************************************************/
+    console.log('calling init');
+    var graph = d3Init();
+    var svg = graph[0][0];
+    console.log('calling draw');
+    d3Draw();
+
 
     /*
      Click - add new item
@@ -207,6 +322,16 @@ $(document).ready(function() {
   old stuff for reference
 ==============================================================================================
 
+
+// load all countries / citizens via dom element json
+var jsonPeople = $('.json.people').html();
+var jsonCountries = $('.json.countries').html();
+
+var DOMPeopple = $.parseJSON(jsonPeople);
+var DOMCountries = $.parseJSON(jsonCountries);
+
+
+// Initial d3 testing
 var generate_random = function() {
     var g = d3.select('#stage').append('svg');
 
