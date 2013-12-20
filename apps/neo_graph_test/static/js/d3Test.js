@@ -14,7 +14,7 @@ document.body.onmouseup = function() {
 
 // graph element styles
 var style = {
-    'Relationship': {
+    'country': {
         'radius': 50
     },
     'people': {
@@ -54,7 +54,7 @@ var cypher = {
         }
     },
     'countries': {
-        "query": "START category=node:Category(category='Relationship') MATCH category--Relationship RETURN Relationship",
+        "query": "START category=node:Category(category='country') MATCH category--country RETURN country",
         "params": {
         }
     },
@@ -69,7 +69,7 @@ var cypher = {
         }
     },
     'is_from': {
-        "query": "START Relationship=node(*) MATCH person-[r:IS_FROM]->Relationship RETURN r",
+        "query": "START country=node(*) MATCH person-[r:IS_FROM]->country RETURN r",
         "params": {
         }
     }
@@ -130,14 +130,14 @@ var getCountries = function(callback) {
 
     var jqxhr_countries = $.post("http://localhost:7474/db/data/cypher", cypher.countries, function() {
         var json = $.parseJSON(jqxhr_countries.responseText);
-        var Relationship;
+        var country;
         //console.log(json.data);
 
         for (var i in json.data) {
-            Relationship = json.data[i][0].data;
-            Relationship['id'] = json.data[i][0].self;
+            country = json.data[i][0].data;
+            country['id'] = json.data[i][0].self;
 
-            countries[Relationship['name']] = Relationship;
+            countries[country['name']] = country;
         }
         console.log('Got countries:');
         console.log(countries);
@@ -250,8 +250,8 @@ var d3Draw = function() {
         var x;
         var y;
 
-        for (var Relationship in countries) {
-            r = style.Relationship.radius;
+        for (var country in countries) {
+            r = style.country.radius;
 
             group = graph.append('g');
             circle = group.append('circle');
@@ -261,19 +261,19 @@ var d3Draw = function() {
             y = helpers.random.range(0, 1, r / svg.clientHeight) * 100;
 
             group
-                .attr('class', 'group Relationship');
+                .attr('class', 'group country');
 
             circle
-                .attr('class', 'node Relationship')
+                .attr('class', 'node country')
                 .attr('r', r)
                 .attr('cx', x + "%")
                 .attr('cy', y + "%");
 
             text
-                .attr('class', 'label Relationship')
+                .attr('class', 'label country')
                 .attr('dx', x + "%")
                 .attr('dy', y + "%")
-                .text(countries[Relationship].name);
+                .text(countries[country].name);
         }
 
         for (var person in people) {
