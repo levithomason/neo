@@ -75,8 +75,22 @@ var cypher = {
     }
 };
 
-var getPeople = function() {
-    var people = {};
+/* Retrieves all Person nodes.  Sets global variable 'people' object to the results.
+ *
+ * callback - a callback passed the Person objects
+ *
+ * Examples
+ *
+ *  getPeople(function(people) {
+ *      for (p in people) {
+ *          console.log(people[p]);
+ *      }
+ *  });
+ *
+ *  Logs each Person in 'people'
+ */
+var getPeople = function(callback) {
+    window.people = {};
 
     var jqxhr_people = $.post("http://localhost:7474/db/data/cypher", cypher.people, function() {
         var json = $.parseJSON(jqxhr_people.responseText);
@@ -91,14 +105,28 @@ var getPeople = function() {
         }
         console.log('Got people:');
         console.log(people);
+        if (arguments.length === 1) {
+            callback.call(people);
+        }
     });
-
-    return people;
-
 };
 
-var getCountries = function() {
-    var countries = {};
+/* Retrieves all Country nodes.  Sets global variable 'countries' object to the results.
+ *
+ * callback - a callback passed the Country objects
+ *
+ * Examples
+ *
+ *  getCountries(function(countries) {
+ *      for (c in countries) {
+ *          console.log(countries[c]);
+ *      }
+ *  });
+ *
+ *  Logs each Country in 'countries'
+ */
+var getCountries = function(callback) {
+    window.countries = {};
 
     var jqxhr_countries = $.post("http://localhost:7474/db/data/cypher", cypher.countries, function() {
         var json = $.parseJSON(jqxhr_countries.responseText);
@@ -113,14 +141,29 @@ var getCountries = function() {
         }
         console.log('Got countries:');
         console.log(countries);
-
+        if (arguments.length === 1) {
+            callback.call(countries);
+        }
     });
 
-    return countries;
 };
 
-var getRelationships = function() {
-    var relationships = {};
+/* Retrieves all Relationships.  Sets global variable 'relationships' object to the results.
+ *
+ * callback - a callback passed the Relationship objects
+ *
+ * Examples
+ *
+ *  getRelationships(function(relationships) {
+ *      for (r in relationships) {
+ *          console.log(relationships[r]);
+ *      }
+ *  });
+ *
+ *  Logs each Relationship in 'relationships'
+ */
+var getRelationships = function(callback) {
+    window.relationships = {};
 
     var jqxhr_relationships = $.post("http://localhost:7474/db/data/cypher", cypher.is_from, function() {
         var json = $.parseJSON(jqxhr_relationships.responseText);
@@ -142,27 +185,57 @@ var getRelationships = function() {
         }
         console.log('Got relationships:');
         console.log(relationships);
+        if (arguments.length === 1) {
+            callback.call(relationships);
+        }
     });
 
-    return relationships;
 };
 
 
 /**********************************************************************************************************
  * D3 Graph
  **********************************************************************************************************/
-var d3Init = function() {
-    return d3.select('#stage').append('svg');
+
+/* Create a d3 graph.
+ * Sets global variables 'graph' (d3 graph object) and 'svg' (svg element).
+ *
+ * container   - String jQuery selector where the graph should be appended
+ * callback    - a callback which is passed the graph and svg variables
+ *
+ * Examples:
+ *
+ *   d3Create('#stage');
+ *
+ *   Appends a d3 graph to the #stage element.
+ ****
+ *   d3Create('#stage', function(graph, svg) {
+ *       graph.append("circle");
+ *       console.log(svg.clientWidth);
+ *       ...
+ *   });
+ *
+ *   Appends a d3 Graph to the #stage element.  Adds a circle to the graph, logs the width of the svg element.
+ */
+var d3Create = function(container, callback) {
+    window.graph = d3.select(container).append('svg');
+    window.svg = graph[0][0];
+
+    if (arguments.length === 2) {
+        arguments[2].call(graph, svg);
+    }
 };
 
+var d3DrawPeople = function(people) {
+
+};
+
+
+
 var d3Draw = function() {
-    console.log('getting data for draw');
-    var people = getPeople();
-    console.log(people);
-    var countries = getCountries();
-    console.log(countries);
-    var relationships = getRelationships();
-    console.log(relationships);
+    getPeople(function(people) {
+        drawPeople(people);
+    });
 
     if ($.isEmptyObject(countries) && $.isEmptyObject(people)) {
         $('#stage').append(
@@ -242,10 +315,10 @@ $(document).ready(function() {
      * Init D3
      ***********************************************************************/
     console.log('calling init');
-    var graph = d3Init();
-    var svg = graph[0][0];
     console.log('calling draw');
     d3Draw();
+
+
 
 
     /*
